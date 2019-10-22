@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="dot.min.js"></script>
+<script id="pagetmpl" type="text/x-dot-template">
+        <h2>Weather in city {{=it.city}}</h2>
+        <p>Temperature: {{=it.temp}} ˚C</p>
+        <p>Wind Speed: {{=it.windSpeed}} m/s</p>
+        <p>Sky status: {{=it.sky}} </p>
+        <p>Pressure: {{=it.pressure}} hPa </p>
+        <p>Humidity: {{=it.humidity}} % </p>
+</script>
+<script type="text/javascript">
+  function getWeather() {
+    var cityName = document.getElementById('city').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=743425b4595f21f19d34ea81bf8f2f5c', false);
+    xhr.send();
+    response = JSON.parse(xhr.responseText);
+    var data = {
+            city: response.name,
+            temp: (response.main.temp - 273.15).toFixed(2),
+            windSpeed: response.wind.speed,
+            sky: response.weather[0].description,
+            pressure: response.main.pressure,
+            humidity: response.main.humidity,
+        }
+        document.getElementById('weather').innerHTML = doT.template(document.getElementById('pagetmpl').text, undefined)(data);
+  }
+</script>
+</head>
+<body>
+<form action="javascript:getWeather()">
+<input id="city" type="text">
+<input type="submit">
+</form>
+<div id="weather"></div>
+</body>
+</html>
