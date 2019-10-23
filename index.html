@@ -1,38 +1,74 @@
 <html>
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="style.css" type="text/css"/>
 <script type="text/javascript" src="dot.min.js"></script>
-<script id="pagetmpl" type="text/x-dot-template">
-        <h2>Weather in city {{=it.city}}</h2>
+<script id="weatherTemplate" type="text/x-dot-template">
+        <h1>Weather in city {{=it.city}}</h1>
         <p>Temperature: {{=it.temp}} ˚C</p>
+		<p>Min temperature: {{=it.minTemp}} ˚C</p>
+		<p>Max temperature: {{=it.maxTemp}} ˚C</p>
         <p>Wind Speed: {{=it.windSpeed}} m/s</p>
         <p>Sky status: {{=it.sky}} </p>
         <p>Pressure: {{=it.pressure}} hPa </p>
         <p>Humidity: {{=it.humidity}} % </p>
 </script>
+<script id="cityNotFoundTemplate" type="text/x-dot-template">
+        <h1>City {{=it.city}} is not found</h1>
+</script>
+<script id="errorTemplate" type="text/x-dot-template">
+        <h1>An error ocured</h1>
+		<p>Code: {{=it.errorCode}}</p>
+		<p>Text: {{=it.errorText}}</p>
+</script>
 <script type="text/javascript">
-  function getWeather() {
+  var weatherTemplate = doT.template(document.getElementById('weatherTemplate').text, undefined);
+  var cityNotFoundTemplate = doT.template(document.getElementById('cityNotFoundTemplate').text, undefined);
+  var errorTemplate = doT.template(document.getElementById('errorTemplate').text, undefined);;
+  
+  function getWeather() 
+  {
+    var content = document.getElementById('weather')
     var cityName = document.getElementById('city').value;
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=743425b4595f21f19d34ea81bf8f2f5c', false);
-    xhr.send();
-    response = JSON.parse(xhr.responseText);
-    var data = {
-            city: response.name,
-            temp: (response.main.temp - 273.15).toFixed(2),
-            windSpeed: response.wind.speed,
-            sky: response.weather[0].description,
-            pressure: response.main.pressure,
-            humidity: response.main.humidity,
-        }
-        document.getElementById('weather').innerHTML = doT.template(document.getElementById('pagetmpl').text, undefined)(data);
+	if (cityName == "")
+	  return
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://api.openweathermap.org/data/2.5/weather?units=metric&appid=743425b4595f21f19d34ea81bf8f2f5c&q=' + cityName, false);
+    request.send();
+	if (request.status == 200)
+	{
+      response = JSON.parse(request.responseText);
+      var weather = {
+              city: response.name,
+              temp: response.main.temp,
+			  minTemp: response.main.temp_min,
+			  maxTemp: response.main.temp_max,
+              windSpeed: response.wind.speed,
+              sky: response.weather[0].description,
+              pressure: response.main.pressure,
+              humidity: response.main.humidity,
+      }
+      content.innerHTML = weatherTemplate(weather);
+	}
+	else
+	{
+	  if (request.status == 404)
+	  {
+	    content.innerHTML = cityNotFoundTemplate({city: cityName});
+	  }
+	  else
+	  {
+	    content.innerHTML = errorTemplate({errorText: response.statusText, errorCode: request.status});
+	  }
+	}
   }
 </script>
 </head>
 <body>
 <form action="javascript:getWeather()">
+<h1>Enter city</h1>
 <input id="city" type="text">
-<input type="submit">
+<input class="submit-button" type="submit">
 </form>
 <div id="weather"></div>
 </body>
