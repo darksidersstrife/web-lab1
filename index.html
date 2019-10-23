@@ -14,12 +14,16 @@
         <p>Humidity: {{=it.humidity}} % </p>
 </script>
 <script id="cityNotFoundTemplate" type="text/x-dot-template">
-        <h1>City {{=it.city}} is not found</h1>
+        <div class="error">
+            <h1>City {{=it.city}} is not found</h1>
+        </div>
 </script>
 <script id="errorTemplate" type="text/x-dot-template">
-        <h1>An error ocured</h1>
-		<p>Code: {{=it.errorCode}}</p>
-		<p>Text: {{=it.errorText}}</p>
+        <div class="error">
+            <h1>An error ocured</h1>
+            <p>Code: {{=it.errorCode}}</p>
+            <p>Text: {{=it.errorText}}</p>
+        </div>
 </script>
 <script type="text/javascript">
   var weatherTemplate = doT.template(document.getElementById('weatherTemplate').text, undefined);
@@ -31,8 +35,10 @@
     var content = document.getElementById('weather')
     var cityName = document.getElementById('city').value;
 	if (cityName == "")
-	  return
-    var request = new XMLHttpRequest();
+	{
+        return
+    }
+	var request = new XMLHttpRequest();
     request.open('GET', 'http://api.openweathermap.org/data/2.5/weather?units=metric&appid=743425b4595f21f19d34ea81bf8f2f5c&q=' + cityName, false);
     request.send();
 	if (request.status == 200)
@@ -58,7 +64,7 @@
 	  }
 	  else
 	  {
-	    content.innerHTML = errorTemplate({errorText: response.statusText, errorCode: request.status});
+	    content.innerHTML = errorTemplate({errorText: request.statusText, errorCode: request.status});
 	  }
 	}
   }
