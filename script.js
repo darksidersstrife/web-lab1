@@ -3,14 +3,19 @@ const cityNotFoundTemplate = doT.template(document.getElementById('cityNotFoundT
 const errorTemplate = doT.template(document.getElementById('errorTemplate').text);
 
 function getWeather(event) {
-    let content = document.getElementById('weather');
     event.preventDefault();
+    let cityName = event.target.city.value;
     if (cityName === "") {
         return
     }
     const request = new XMLHttpRequest();
     request.open('GET', 'http://api.openweathermap.org/data/2.5/weather?units=metric&appid=743425b4595f21f19d34ea81bf8f2f5c&q=' + cityName, false);
     request.send();
+    render(request)
+}
+
+function render(request) {
+    let content = document.getElementById('weather');
     if (request.status === 200) {
         response = JSON.parse(request.responseText);
         const weather = {
