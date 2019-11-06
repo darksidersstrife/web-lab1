@@ -2,16 +2,21 @@ const weatherTemplate = doT.template(document.getElementById('weatherTemplate').
 const cityNotFoundTemplate = doT.template(document.getElementById('cityNotFoundTemplate').text);
 const errorTemplate = doT.template(document.getElementById('errorTemplate').text);
 
-function getWeather(event) {
+function handleSubmit(event) {
     event.preventDefault();
     let cityName = event.target.city.value;
     if (cityName === "") {
         return
     }
+    weatherRequest = getWeather(cityName)
+    render(weatherRequest, cityName)
+}
+
+function getWeather(cityName) {
     const request = new XMLHttpRequest();
     request.open('GET', 'http://api.openweathermap.org/data/2.5/weather?units=metric&appid=743425b4595f21f19d34ea81bf8f2f5c&q=' + cityName, false);
     request.send();
-    render(request, cityName)
+    return request;
 }
 
 function render(request, cityName) {
