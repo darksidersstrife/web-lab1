@@ -11,10 +11,10 @@ function getWeather(event) {
     const request = new XMLHttpRequest();
     request.open('GET', 'http://api.openweathermap.org/data/2.5/weather?units=metric&appid=743425b4595f21f19d34ea81bf8f2f5c&q=' + cityName, false);
     request.send();
-    render(request)
+    render(request, cityName)
 }
 
-function render(request) {
+function render(request, cityName) {
     let content = document.getElementById('weather');
     if (request.status === 200) {
         response = JSON.parse(request.responseText);
