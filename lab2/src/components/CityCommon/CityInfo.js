@@ -14,24 +14,24 @@ export class CityInfo extends Component{
         let pressure = this.props.data.pressure;
         let clouds = this.props.data.clouds;
 
-        return <div>
-            <div>
+        return <div class="col-6">
+            <div class = "info-row m-1">
                 <span>{WIND}</span>
                 <span>{wind}</span>
             </div>
-            <div>
+            <div class = "info-row m-1">
                 <span>{CLOUDS}</span>
                 <span>{clouds}</span>
             </div>
-            <div>
+            <div class = "info-row m-1">
                 <span>{PRESSURE}</span>
                 <span>{pressure}</span>
             </div>
-            <div>
+            <div class = "info-row m-1">
                 <span>{HUMIDITY}</span>
                 <span>{humidity}</span>
             </div>
-            <div>
+            <div class = "info-row m-1">
                 <span>{COORD}</span>
                 <span>{coord}</span>
             </div>

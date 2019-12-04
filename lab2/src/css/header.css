@@ -1,0 +1,40 @@
+.header{
+    font-family: Roboto;
+    font-size: 6vh;
+    color: gray;
+}
+
+.title{
+    font-family: Arial;
+    font-size: 7vh;
+    color: dimgray;
+}
+
+.temp{
+    font-family: Arial;
+    font-size: 13vh;
+    color: dimgray;
+}
+
+.info-row{
+    background-color: darkgray;
+    font-family: Arial;
+    /*font-size: 13vh;*/
+    color: white;
+    padding: 4px;
+    padding-left: 7px;
+
+}
+.light-button{
+    font-family: Roboto;
+    font-size: 1vh;
+    color: gray;
+    background-color: darkgray;
+}
+
+.spin{
+    width: 14vh;
+    height: 14vh;
+}
+
+

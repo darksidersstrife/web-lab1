@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {CurrentCity} from "./Current/CurrentCity";
+import "../css/header.css"
 
 
 const TITLE = "Погода здесь";
@@ -21,15 +22,15 @@ export class Current extends Component {
     }
 
     CurrentHeader =
-        <div>
-            <span>
+        <div class="row ">
+            <div class="header col-5">
                 {TITLE}
-            </span>
-            <span>
-                <button onClick={this.getPosition.bind(this)}>
+            </div>
+            <div class="col-7">
+                <button class="btn btn-secondary " onClick={this.getPosition.bind(this)}>
                     {BUTTON_TITLE}
                 </button>
-            </span>
+            </div>
         </div>;
 
     defaultPosition = {

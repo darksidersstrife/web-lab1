@@ -19,17 +19,19 @@ export class CurrentCity extends Component {
 
     render() {
         return (this.state.downloading)
-            ? <div>
-                <span>Типа спиннер</span>
+            ? <div className="text-center ">
+                <div className="title">Подождите, данные загружаются</div>
+                <div className="spinner-border text-secondary spin" >
+                </div>
             </div>
             : (this.state.error)
-                ? <div>
-                    <span>АШИПКА</span>
+                ? <div className="text-center">
+                    <span className="title">Упс, что-то пошло не так</span>
                 </div>
-                : <div>
-                    Типа загрузилось
+                : <div class="row">
+
                     <CurrentCityHeader data={this.state.cityHeader}/>
-                    <CityInfo data = {this.state.cityInfo}/>
+                    <CityInfo data={this.state.cityInfo}/>
                 </div>
     }
 
