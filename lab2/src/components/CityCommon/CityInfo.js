@@ -14,26 +14,26 @@ export class CityInfo extends Component{
         let pressure = this.props.data.pressure;
         let clouds = this.props.data.clouds;
 
-        return <div class="col-6">
-            <div class = "info-row m-1">
+        return <div>
+            <div className = "info-row m-1 d-flex">
                 <span>{WIND}</span>
-                <span>{wind}</span>
+                <span className={"ml-auto"}>{wind}</span>
             </div>
-            <div class = "info-row m-1">
+            <div className = "info-row m-1 d-flex">
                 <span>{CLOUDS}</span>
-                <span>{clouds}</span>
+                <span className={"ml-auto"}>{clouds}</span>
             </div>
-            <div class = "info-row m-1">
+            <div className = "info-row m-1 d-flex">
                 <span>{PRESSURE}</span>
-                <span>{pressure}</span>
+                <span className={"ml-auto"}>{pressure}</span>
             </div>
-            <div class = "info-row m-1">
+            <div className = "info-row m-1 d-flex">
                 <span>{HUMIDITY}</span>
-                <span>{humidity}</span>
+                <span className={"ml-auto"}>{humidity}</span>
             </div>
-            <div class = "info-row m-1">
+            <div className = "info-row m-1 d-flex">
                 <span>{COORD}</span>
-                <span>{coord}</span>
+                <span className={"ml-auto"}>{coord}</span>
             </div>
         </div>
 

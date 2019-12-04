@@ -21,17 +21,18 @@ export class CurrentCity extends Component {
         return (this.state.downloading)
             ? <div className="text-center ">
                 <div className="title">Подождите, данные загружаются</div>
-                <div className="spinner-border text-secondary spin" >
+                <div className="spinner-border text-secondary spin">
                 </div>
             </div>
             : (this.state.error)
                 ? <div className="text-center">
                     <span className="title">Упс, что-то пошло не так</span>
                 </div>
-                : <div class="row">
-
-                    <CurrentCityHeader data={this.state.cityHeader}/>
-                    <CityInfo data={this.state.cityInfo}/>
+                : <div className="row">
+                        <CurrentCityHeader data={this.state.cityHeader}/>
+                    <div className={"col-6"}>
+                        <CityInfo data={this.state.cityInfo}/>
+                    </div>
                 </div>
     }
 

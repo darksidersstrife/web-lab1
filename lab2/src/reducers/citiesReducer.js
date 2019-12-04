@@ -7,7 +7,7 @@ export default function (cities, action) {
     switch (action.type) {
         case "ADD_CITY":
             console.log('add');
-            return {...cities, [action.cityName] : null};
+            return {...cities, [action.cityName] : {cityHeader : null, cityInfo: null}};
         case "DELETE_CITY":
             console.log('remove');
             newState = {...cities};
@@ -15,7 +15,8 @@ export default function (cities, action) {
             return newState;
         case "UPDATE_CITY":
             newState = {...cities};
-            newState[action.cityName] = action.cityInfo;
+            newState[action.cityName].cityHeader = action.cityHeader;
+            newState[action.cityName].cityInfo = action.cityInfo;
             return newState;
         default:
             return cities

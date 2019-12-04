@@ -6,9 +6,11 @@ import {connect} from "react-redux";
 class FavoriteList extends Component {
 
     render() {
-        return <div>
-            {Object.entries(this.props.cities).map(([cityName, cityInfo]) => {
-                return <FavoriteCity key={cityName} name={cityName} cityInfo={cityInfo}/>
+        return <div className={"row"}>
+            {Object.entries(this.props.cities).map(([cityName, city]) => {
+                return <div className={"col-6"} key={cityName}>
+                    <FavoriteCity name={cityName} cityInfo={city.cityInfo} cityHeader={city.cityHeader}/>
+                </div>
             })}
         </div>
     }
@@ -21,12 +23,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        /*fetchData: (url) => dispatch(itemsFetchData(url)),
-        add: (city) => dispatch(doAddItem(city)),
-        changeInput: (input) => dispatch(doChangeInput(input))*/
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavoriteList);
+export default connect(mapStateToProps, null)(FavoriteList);

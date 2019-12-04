@@ -6,13 +6,13 @@ export class CurrentCityHeader extends Component {
         let name = this.props.data.name;
         let icon = this.props.data.iconLink;
         let temp = this.props.data.temp;
-        return <div class="col-6">
-            <div class="title">{name}</div>
-            <div class="row">
-                <div class="col-6 text-center">
+        return <div className="col-6">
+            <div className="title">{name}</div>
+            <div className="row">
+                <div className="col-6">
                     <img alt="icon" width="100px" src={icon}/>
                 </div>
-                <div class="col-6 temp">{temp}</div>
+                <div className="col-6 temp">{temp}</div>
             </div>
         </div>
 

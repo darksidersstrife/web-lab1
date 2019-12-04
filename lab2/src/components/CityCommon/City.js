@@ -1,11 +1,16 @@
-import React, {Component} from 'react';
-
 export function getHeader(response) {
-    console.log("RESPONSE=1" ,response)
     return {
         name: response.name,
         temp: parseInt(response.main.temp - 273) + "°C",
         iconLink: "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"
+    }
+}
+
+export function getHeaderMini(response) {
+    return {
+        name: response.name,
+        temp: parseInt(response.main.temp - 273) + "°C",
+        iconLink: "https://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
     }
 }
 

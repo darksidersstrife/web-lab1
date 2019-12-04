@@ -3,7 +3,7 @@ import {FavoriteCityHeader} from "./FavoriteCityHeader";
 import {CityInfo} from "../CityCommon/CityInfo";
 import UpdateCity from "../../actions/UpdateCity";
 import DeleteCity from "../../actions/DeleteCity";
-import {getHeader, getInfo} from "../CityCommon/City";
+import {getHeaderMini, getInfo} from "../CityCommon/City";
 import {connect} from "react-redux";
 
 
@@ -11,15 +11,14 @@ class FavoriteCity extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {error: false, download : !Boolean(props.cityInfo)};
-        console.log(this.state);
+        this.state = {error: false, download: !Boolean(props.cityInfo)};
         if (!props.cityInfo) {
             props.update(this.getWeather(props.name));
         }
     }
 
-    updateHandler(name) {
-        this.setState({error : false, download : true});
+    updateHandler() {
+        this.setState({error: false, download: true});
         this.props.update(this.getWeather(this.props.name));
     }
 
@@ -33,12 +32,12 @@ class FavoriteCity extends Component {
             })
             .then((response) => response.json())
             .then((response) => {
-                this.setState({download : false});
-                return UpdateCity(name, getInfo(response))
+                this.setState({download: false});
+                return UpdateCity(name, getHeaderMini(response), getInfo(response))
             })
             .catch(err => {
                     this.setState({
-                        download : false,
+                        download: false,
                         error: true,
                     });
                 }
@@ -46,24 +45,26 @@ class FavoriteCity extends Component {
     }
 
     render() {
-        console.log('render')
-        console.log(this.state.download)
         let cityInfo = this.state.error
             ? <div className={"title-sm text-secondary ml-5"}>Ой...</div>
             : !this.state.download
                 ? <CityInfo data={this.props.cityInfo}/>
                 : <div><span className="spinner-border text-secondary ml-5 m-1 spin"/></div>;
-        return   <div>
-            <FavoriteCityHeader name={this.props.name}/>
-            <button onClick={this.updateHandler.bind(this, this.props.name)}>обновить</button>
-            <button onClick={this.props.delete.bind(null, this.props.name)}>удалить</button>
+        return <div>
+            <div className={"d-flex flex-row align-items-center"}>
+                <FavoriteCityHeader name={this.props.name} data={this.props.cityHeader} download={this.state.download} error={this.state.error}/>
+                <div className={"ml-auto"}>
+                    <button className={"btn btn-circle btn-secondary"} onClick={this.updateHandler.bind(this)}>↺</button>
+                    <button className={"btn btn-circle btn-secondary"} onClick={this.props.delete.bind(null, this.props.name)}>X</button>
+                </div>
+            </div>
             {cityInfo}
         </div>
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(this.state)
-        console.log(nextState)
+        console.log(this.state);
+        console.log(nextState);
         console.log(this.state.download && !nextState.download && !this.state.error);
         return !(this.state.download && !nextState.download && !nextState.error);
     }
@@ -71,7 +72,9 @@ class FavoriteCity extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        update: (promise) =>{ dispatch(promise) },
+        update: (promise) => {
+            dispatch(promise)
+        },
         delete: (name) => dispatch(DeleteCity(name))
     }
 }

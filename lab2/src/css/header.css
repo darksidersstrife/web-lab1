@@ -21,6 +21,12 @@
     color: dimgray;
 }
 
+.mini-temp{
+    font-family: Arial;
+    font-size: 3vh;
+    color: dimgray;
+}
+
 .info-row{
     background-color: darkgray;
     font-family: Arial;

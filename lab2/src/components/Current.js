@@ -22,12 +22,12 @@ export class Current extends Component {
     }
 
     CurrentHeader =
-        <div class="row ">
-            <div class="header col-5">
+        <div className="row ">
+            <div className="header col-5">
                 {TITLE}
             </div>
-            <div class="col-7">
-                <button class="btn btn-secondary " onClick={this.getPosition.bind(this)}>
+            <div className="col-7">
+                <button className="btn btn-secondary " onClick={this.getPosition.bind(this)}>
                     {BUTTON_TITLE}
                 </button>
             </div>

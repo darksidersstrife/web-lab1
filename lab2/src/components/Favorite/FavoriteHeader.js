@@ -17,16 +17,16 @@ class FavoriteHeader extends Component {
             console.log(this.state.inputValue);
             this.props.add(this.state.inputValue)
         }}>
-            <div class="header col-7">
+            <div className="header col-8">
                 {FAVOR}
             </div>
-            <div className={"col-4"}>
-                <input className={"form-control"} placeholder={"Добавить новый город"} value={this.state.inputValue} onChange={(e) => {
+            <div className={"col d-flex"}>
+                <input className={"form-control mt-auto"} placeholder={"Добавить новый город"} value={this.state.inputValue} onChange={(e) => {
                     this.setState({inputValue: e.target.value})
                 }}/>
             </div>
-            <div>
-                <input type={"submit"} value={"Добавить"}/>
+            <div className={"d-flex"}>
+                <button type={"submit"} className={"btn btn-circle btn-secondary mt-auto"}>+</button>
             </div>
         </form>
     }
