@@ -11,10 +11,16 @@ class FavoriteCity extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {error: false};
+        this.state = {error: false, download : !Boolean(props.cityInfo)};
+        console.log(this.state);
         if (!props.cityInfo) {
-            this.props.update(this.getWeather(props.name))
+            props.update(this.getWeather(props.name));
         }
+    }
+
+    updateHandler(name) {
+        this.setState({error : false, download : true});
+        this.props.update(this.getWeather(this.props.name));
     }
 
     getWeather(name) {
@@ -26,9 +32,13 @@ class FavoriteCity extends Component {
                 return response;
             })
             .then((response) => response.json())
-            .then((response) => {UpdateCity(getHeader(response).name, getInfo(response))})
+            .then((response) => {
+                this.setState({download : false});
+                return UpdateCity(name, getInfo(response))
+            })
             .catch(err => {
                     this.setState({
+                        download : false,
                         error: true,
                     });
                 }
@@ -36,19 +46,28 @@ class FavoriteCity extends Component {
     }
 
     render() {
-        return this.props.cityInfo ? <div>
+        console.log('render')
+        console.log(this.state.download)
+        let cityInfo = this.state.error ? 'ошибочка' : !this.state.download ? <CityInfo data={this.props.cityInfo}/> : 'загрузочка';
+        return   <div>
             <FavoriteCityHeader name={this.props.name}/>
-            <CityInfo data={this.props.cityInfo}/>
-        </div> : <div>
-            <FavoriteCityHeader name={this.props.name}/>
+            <button onClick={this.updateHandler.bind(this, this.props.name)}>обновить</button>
+            <button onClick={this.props.delete.bind(null, this.props.name)}>удалить</button>
+            {cityInfo}
         </div>
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(this.state)
+        console.log(nextState)
+        console.log(this.state.download && !nextState.download && !this.state.error);
+        return !(this.state.download && !nextState.download && !nextState.error);
+    }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        update: (promise) =>{ console.log('a'); dispatch(promise) },
+        update: (promise) =>{ dispatch(promise) },
         delete: (name) => dispatch(DeleteCity(name))
     }
 }
