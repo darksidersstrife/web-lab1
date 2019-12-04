@@ -5,7 +5,11 @@ export default function (cities, action) {
     let newState;
     switch (action.type) {
         case "ADD_CITY":
-            return {...cities, [action.cityName] : {cityHeader : null, cityInfo: null}};
+            if (!(action.cityName in cities)) {
+                return {...cities, [action.cityName]: {cityHeader: null, cityInfo: null}};
+            } else {
+                return cities
+            }
         case "DELETE_CITY":
             newState = {...cities};
             delete newState[action.cityName];
