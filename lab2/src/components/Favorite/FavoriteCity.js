@@ -48,7 +48,11 @@ class FavoriteCity extends Component {
     render() {
         console.log('render')
         console.log(this.state.download)
-        let cityInfo = this.state.error ? 'ошибочка' : !this.state.download ? <CityInfo data={this.props.cityInfo}/> : 'загрузочка';
+        let cityInfo = this.state.error
+            ? <div className={"title-sm text-secondary ml-5"}>Ой...</div>
+            : !this.state.download
+                ? <CityInfo data={this.props.cityInfo}/>
+                : <div><span className="spinner-border text-secondary ml-5 m-1 spin"/></div>;
         return   <div>
             <FavoriteCityHeader name={this.props.name}/>
             <button onClick={this.updateHandler.bind(this, this.props.name)}>обновить</button>

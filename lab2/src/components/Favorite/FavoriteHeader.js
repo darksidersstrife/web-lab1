@@ -8,16 +8,26 @@ class FavoriteHeader extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {inputValue : ''};
+        this.state = {inputValue: ''};
     }
 
     render() {
-        return <form onSubmit={(e) => {e.preventDefault(); console.log(this.state.inputValue); this.props.add(this.state.inputValue)}}>
-            <span>
+        return <form className={"row"} onSubmit={(e) => {
+            e.preventDefault();
+            console.log(this.state.inputValue);
+            this.props.add(this.state.inputValue)
+        }}>
+            <div class="header col-7">
                 {FAVOR}
-            </span>
-            <input value={this.state.inputValue} onChange={(e) => {this.setState({inputValue : e.target.value})}}/>
-            <input type={"submit"} value={"Добавить"}/>
+            </div>
+            <div className={"col-4"}>
+                <input className={"form-control"} placeholder={"Добавить новый город"} value={this.state.inputValue} onChange={(e) => {
+                    this.setState({inputValue: e.target.value})
+                }}/>
+            </div>
+            <div>
+                <input type={"submit"} value={"Добавить"}/>
+            </div>
         </form>
     }
 
