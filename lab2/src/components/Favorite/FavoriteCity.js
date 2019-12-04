@@ -63,9 +63,6 @@ class FavoriteCity extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(this.state);
-        console.log(nextState);
-        console.log(this.state.download && !nextState.download && !this.state.error);
         return !(this.state.download && !nextState.download && !nextState.error);
     }
 }

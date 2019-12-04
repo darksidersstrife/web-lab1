@@ -14,7 +14,6 @@ class FavoriteHeader extends Component {
     render() {
         return <form className={"row"} onSubmit={(e) => {
             e.preventDefault();
-            console.log(this.state.inputValue);
             this.props.add(this.state.inputValue)
         }}>
             <div className="header col-8">
