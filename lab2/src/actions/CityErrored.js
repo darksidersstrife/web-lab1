@@ -1,7 +1,7 @@
 
 export default function (cityName) {
     return {
-        type: 'UPDATE_CITY',
+        type: 'ERROR_CITY',
         cityName: cityName,
     }
 }

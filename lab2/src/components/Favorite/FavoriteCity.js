@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {FavoriteCityHeader} from "./FavoriteCityHeader";
 import {CityInfo} from "../CityCommon/CityInfo";
-import UpdateCity from "../../actions/UpdateCity";
+import UpdateCity from "../../actions/UpdateCity"
+import LoadCity from "../../actions/LoadCity";
 import DeleteCity from "../../actions/DeleteCity";
 import {connect} from "react-redux";
 
@@ -12,20 +13,8 @@ class FavoriteCity extends Component {
         super(props);
         this.state = {error: false, download: !Boolean(props.cityInfo)};
         if (!props.cityInfo) {
-            props.update(this.props.name, this.onError.bind(this));
+            props.update(props.name);
         }
-    }
-
-    updateHandler() {
-        this.setState({error: false, download: true});
-        this.props.update(this.props.name, this.onError.bind(this));
-    }
-
-    onError() {
-        this.setState({
-            download: false,
-            error: true,
-        });
     }
 
     render() {
@@ -38,7 +27,7 @@ class FavoriteCity extends Component {
             <div className={"d-flex flex-row align-items-center"}>
                 <FavoriteCityHeader name={this.props.name} data={this.props.cityHeader} download={this.state.download} error={this.state.error}/>
                 <div className={"ml-auto"}>
-                    <button className={"btn btn-circle btn-secondary"} onClick={this.updateHandler.bind(this)}>↺</button>
+                    <button className={"btn btn-circle btn-secondary"} onClick={this.props.update.bind(null, this.props.name)}>↺</button>
                     <button className={"btn btn-circle btn-secondary"} onClick={this.props.delete.bind(null, this.props.name)}>X</button>
                 </div>
             </div>
@@ -46,16 +35,14 @@ class FavoriteCity extends Component {
         </div>
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps !== this.props && this.state.download) {
-            this.setState({download : false})
-        }
+    static getDerivedStateFromProps(props, state) {
+        return {error: Boolean(props.error), download: Boolean(props.download || !Boolean(props.cityInfo))}
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        update: (name, err) => dispatch(UpdateCity(name, err)),
+        update: (name) => {dispatch(UpdateCity(name));dispatch(LoadCity(name));},
         delete: (name) => dispatch(DeleteCity(name))
     }
 }
