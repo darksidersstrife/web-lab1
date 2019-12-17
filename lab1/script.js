@@ -32,7 +32,7 @@ function getWeather(cityName) {
         if (request.status === 404) {
             return { error : 'NotFound' }
         } else {
-            return { error : request.statusText}
+            return { error : request.statusText, errorCode : request.status}
         }
     }
 }
@@ -45,7 +45,7 @@ function render(weather, cityName) {
         if (weather.error === 'NotFound') {
             content.innerHTML = cityNotFoundTemplate({city: cityName});
         } else {
-            content.innerHTML = errorTemplate({errorText: request.statusText, errorCode: request.status});
+            content.innerHTML = errorTemplate({errorText: weather.error, errorCode: weather.errorCode});
         }
     }
 }

@@ -11,7 +11,7 @@
         <p>Wind Speed: {{=it.windSpeed}} m/s</p>
         <p>Sky status: {{=it.sky}} </p>
         <p>Pressure: {{=it.pressure}} hPa </p>
-        <p>Humidity: {{=it.humidity}} % </p>
+        <p>Humidity: {{=it.humidity}}% </p>
     </script>
     <script id="cityNotFoundTemplate" type="text/x-dot-template">
         <div class="error">
@@ -20,14 +20,15 @@
     </script>
     <script id="errorTemplate" type="text/x-dot-template">
         <div class="error">
-            <h1>An error ocured</h1>
+            <h1>An error has occured</h1>
             <p>Code: {{=it.errorCode}}</p>
             <p>Text: {{=it.errorText}}</p>
         </div>
     </script>
+    <script type="text/javascript" src="script.js"></script>
     <script src="./node_modules/mocha/mocha.js"></script>
     <script src="./node_modules/chai/chai.js"></script>
-    <script type="text/javascript" src="script.js"></script>
+    <script src="./node_modules/sinon/pkg/sinon.js"></script>
 </head>
 <body>
 <form onsubmit="handleSubmit(event);">
@@ -37,5 +38,6 @@
 </form>
 <div id="weather"></div>
 </body>
+<script type="text/javascript" src="mock/weather.js"></script>
 <script type="text/javascript" src="test/test.js"></script>
 </html>
