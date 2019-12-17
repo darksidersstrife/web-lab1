@@ -8,22 +8,16 @@ function handleSubmit(event) {
     if (cityName === "") {
         return
     }
-    weatherRequest = getWeather(cityName)
-    render(weatherRequest, cityName)
+    render(getWeather(cityName), cityName)
 }
 
 function getWeather(cityName) {
-    const request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open('GET', 'http://api.openweathermap.org/data/2.5/weather?units=metric&appid=743425b4595f21f19d34ea81bf8f2f5c&q=' + cityName, false);
     request.send();
-    return request;
-}
-
-function render(request, cityName) {
-    let content = document.getElementById('weather');
     if (request.status === 200) {
-        response = JSON.parse(request.responseText);
-        const weather = {
+        let response = JSON.parse(request.responseText);
+        return {
             city: response.name,
             temp: response.main.temp,
             minTemp: response.main.temp_min,
@@ -32,10 +26,23 @@ function render(request, cityName) {
             sky: response.weather[0].description,
             pressure: response.main.pressure,
             humidity: response.main.humidity,
+            error : null
         };
-        content.innerHTML = weatherTemplate(weather);
     } else {
         if (request.status === 404) {
+            return { error : 'NotFound' }
+        } else {
+            return { error : request.statusText}
+        }
+    }
+}
+
+function render(weather, cityName) {
+    let content = document.getElementById('weather');
+    if (weather.error === null) {
+        content.innerHTML = weatherTemplate(weather);
+    } else {
+        if (weather.error === 'NotFound') {
             content.innerHTML = cityNotFoundTemplate({city: cityName});
         } else {
             content.innerHTML = errorTemplate({errorText: request.statusText, errorCode: request.status});
