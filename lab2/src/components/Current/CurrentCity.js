@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getHeader, getInfo} from "../CityCommon/City";
+import {getHeader, getInfo} from "../../util/City";
 import {CurrentCityHeader} from "./CurrentCityHeader";
 import {CityInfo} from "../CityCommon/CityInfo";
 

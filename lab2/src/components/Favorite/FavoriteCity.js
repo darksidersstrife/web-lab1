@@ -3,7 +3,6 @@ import {FavoriteCityHeader} from "./FavoriteCityHeader";
 import {CityInfo} from "../CityCommon/CityInfo";
 import UpdateCity from "../../actions/UpdateCity";
 import DeleteCity from "../../actions/DeleteCity";
-import {getHeaderMini, getInfo} from "../CityCommon/City";
 import {connect} from "react-redux";
 
 
@@ -13,35 +12,20 @@ class FavoriteCity extends Component {
         super(props);
         this.state = {error: false, download: !Boolean(props.cityInfo)};
         if (!props.cityInfo) {
-            props.update(this.getWeather(props.name));
+            props.update(this.props.name, this.onError.bind(this));
         }
     }
 
     updateHandler() {
         this.setState({error: false, download: true});
-        this.props.update(this.getWeather(this.props.name));
+        this.props.update(this.props.name, this.onError.bind(this));
     }
 
-    getWeather(name) {
-        return fetch(`https://api.openweathermap.org/data/2.5/weather?appid=2e19bb27bd5e717bac388dc0c1827b17&q=${name}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((response) => {
-                this.setState({download: false});
-                return UpdateCity(name, getHeaderMini(response), getInfo(response))
-            })
-            .catch(err => {
-                    this.setState({
-                        download: false,
-                        error: true,
-                    });
-                }
-            );
+    onError() {
+        this.setState({
+            download: false,
+            error: true,
+        });
     }
 
     render() {
@@ -62,16 +46,16 @@ class FavoriteCity extends Component {
         </div>
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return !(this.state.download && !nextState.download && !nextState.error);
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps !== this.props && this.state.download) {
+            this.setState({download : false})
+        }
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        update: (promise) => {
-            dispatch(promise)
-        },
+        update: (name, err) => dispatch(UpdateCity(name, err)),
         delete: (name) => dispatch(DeleteCity(name))
     }
 }
