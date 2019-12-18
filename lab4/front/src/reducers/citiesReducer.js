@@ -21,8 +21,7 @@ export default function (cities, action) {
             return newState;
         case "UPDATE_CITY_INFO":
             newState = {...cities};
-            newState[action.cityName].cityHeader = action.cityHeader;
-            newState[action.cityName].cityInfo = action.cityInfo;
+            newState[action.cityName] = action.city;
             newState[action.cityName].error = false;
             newState[action.cityName].download = false;
             return newState;

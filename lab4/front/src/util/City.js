@@ -24,3 +24,12 @@ export function getInfo(response) {
     }
 
 }
+
+export function skipState(key, value) {
+    if (key === "error" || key === "download") {
+        return undefined
+    } else {
+        return value
+    }
+
+}

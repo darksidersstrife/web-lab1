@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import AddCity from "../../actions/AddCity";
+import AddCity from "../../actions/AddCityToStore";
 
 const FAVOR = "Избранное";
 

@@ -12,7 +12,7 @@ export default function (name) {
         })
         .then((response) => response.json())
         .then((response) => {
-            return UpdateCityInfo(name, getHeaderMini(response), getInfo(response));
+            return {"cityName": name, "cityHeader": getHeaderMini(response), "cityInfo": getInfo(response)};
         })
         .catch(err => {
                 return ErrorCity(name)

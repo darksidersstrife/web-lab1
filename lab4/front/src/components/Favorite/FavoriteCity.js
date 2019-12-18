@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {FavoriteCityHeader} from "./FavoriteCityHeader";
 import {CityInfo} from "../CityCommon/CityInfo";
 import UpdateCity from "../../actions/UpdateCity"
-import LoadCity from "../../actions/LoadCity";
-import DeleteCity from "../../actions/DeleteCity";
 import {connect} from "react-redux";
+import AddCityToServer from "../../actions/AddCityToServer";
+import DeleteCityFromServer from "../../actions/DeleteCityFromServer";
+import PutCityOnServer from "../../actions/PutCityOnServer";
 
 
 class FavoriteCity extends Component {
@@ -13,7 +14,7 @@ class FavoriteCity extends Component {
         super(props);
         this.state = {error: false, download: !Boolean(props.cityInfo)};
         if (!props.cityInfo) {
-            props.update(props.name);
+            props.add(props.name);
         }
     }
 
@@ -42,8 +43,9 @@ class FavoriteCity extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        update: (name) => {dispatch(UpdateCity(name));dispatch(LoadCity(name));},
-        delete: (name) => dispatch(DeleteCity(name))
+        add : (name) => {dispatch(AddCityToServer(name))},
+        update: (name) => {dispatch(UpdateCity(name)); dispatch(PutCityOnServer(name))},
+        delete: (name) => dispatch(DeleteCityFromServer(name))
     }
 }
 
