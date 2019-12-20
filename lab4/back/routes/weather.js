@@ -8,9 +8,9 @@ module.exports =  function(router) {
             res.status(400).send("No name provided")
         } else {
             fetch(`${conf.apiUrl}&appid=${conf.token}&q=${encodeURI(req.query.name)}`)
-                .then((response => { if (!response.ok) throw response.statusText; else return response.json()}))
+                .then((response => { if (!response.ok) throw {code : response.status, text : response.statusText}; else return response.json()}))
                 .then(weather => res.status(weather.cod).send(weather))
-                .catch(err => res.status(500).send(`Error: ${err.toString()}`));
+                .catch(err => res.status(err.code).send(err.text));
         }
     });
 
@@ -21,9 +21,9 @@ module.exports =  function(router) {
             res.status(400).send("No lon provided")
         } else {
             fetch(`${conf.apiUrl}&appid=${conf.token}&lat=${req.query.lat}&lon=${req.query.lon}`)
-                .then((response => { if (!response.ok) throw response.statusText; else return response.json()}))
+                .then((response => { if (!response.ok) throw {code : response.status, text : response.statusText}; else return response.json()}))
                 .then(weather => res.status(weather.cod).send(weather))
-                .catch(err => res.send(`Error: ${err.toString()}`));
+                .catch(err => res.status(err.code).send(err.text));
         }
     });
 

@@ -2,20 +2,20 @@ import React, {Component} from 'react';
 import FavoriteList from "./Favorite/FavoriteList";
 import FavoriteHeader from "./Favorite/FavoriteHeader";
 import {connect} from "react-redux";
-import UpdateList from "../actions/UpdateList";
+import LoadList from "../actions/LoadList";
 
 class Favorite extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {download: true, error: false}
+        props.update()
     }
 
     render() {
-        return this.state.download ?
+        return this.props.state.download ?
             <div><span className="spinner-border text-secondary ml-5 m-1 spin"/></div>
-            : this.state.error ?
-                <div className={"title-sm text-secondary ml-5"}>Не загрузилось(</div>
+            : this.props.state.error ?
+                <div className={"title-sm text-secondary ml-5"}>{"Ошибка:" + (this.props.state.errorText || "Что-то пошло не так...")}</div>
                 : <div>
                     <FavoriteHeader/>
                     <FavoriteList/>
@@ -26,8 +26,14 @@ class Favorite extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        update: () => (dispatch(UpdateList))
+        update: () => (dispatch(LoadList()))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Favorite);
+function mapStateToProps(state) {
+    return {
+        state : state
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Favorite);

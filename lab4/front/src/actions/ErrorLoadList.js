@@ -1,6 +1,7 @@
 
-export default function () {
+export default function (errorText) {
     return {
-        type : "LIST_LOAD_ERROR"
+        type : "LIST_LOAD_ERROR",
+        errorText : errorText
     }
 }

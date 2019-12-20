@@ -1,5 +1,4 @@
 import UpdateCityInfo from "./UpdateCityInfo";
-import ErrorCity from "./CityErrored";
 import {skipState} from "../util/City";
 
 export default function (city) {
@@ -13,11 +12,8 @@ export default function (city) {
     })
         .then((response) => {
             if (!response.ok) {
-                throw Error(response.statusText);
+                return response.text().then(text => {throw "City was not updated:" + text});
             }
         })
         .then(() => UpdateCityInfo(city))
-        .catch(err => {
-            return ErrorCity(city.cityName)
-        });
 }

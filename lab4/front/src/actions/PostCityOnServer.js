@@ -1,6 +1,5 @@
 import UpdateCityInfo from "./UpdateCityInfo";
 import {skipState} from "../util/City";
-import ErrorCityNotLoaded from "./ErrorCityNotLoaded";
 
 export default function (city) {
     return fetch("http://localhost:4000/favorite", {
@@ -13,11 +12,8 @@ export default function (city) {
     })
         .then((response) => {
             if (!response.ok) {
-                throw Error(response.statusText);
+                return response.text().then(text => {throw "City was not added: " + text});
             }
         })
-        .then(() => UpdateCityInfo(city))
-        .catch(err => {
-            return ErrorCityNotLoaded(city.cityName)
-        });
+        .then(() => UpdateCityInfo(city));
 }

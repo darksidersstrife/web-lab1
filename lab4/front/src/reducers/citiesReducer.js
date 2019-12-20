@@ -1,7 +1,7 @@
 
 
 
-export default function (cities, action) {
+export default function (cities = {}, action) {
     let newState;
     switch (action.type) {
         case "ADD_CITY":
@@ -28,7 +28,7 @@ export default function (cities, action) {
         case "ERROR_CITY":
             newState = {...cities};
             newState[action.cityName].error = true;
-            newState[action.cityName].errorText = "ошибка :(";
+            newState[action.cityName].errorText =action.errorText;
             newState[action.cityName].download = false;
             return newState;
         case "CITY_NOT_LOADED":
@@ -37,10 +37,6 @@ export default function (cities, action) {
             newState[action.cityName].errorText = "Город не был сохранен на сервере";
             newState[action.cityName].download = false;
             return newState;
-        case "UPDATE_LIST":
-            return {cities : action.list, download : true};
-        case "LIST_LOAD_ERROR":
-            return {error: true, cities : {}};
         default:
             return cities
     }

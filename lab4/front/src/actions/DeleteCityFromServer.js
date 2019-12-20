@@ -1,4 +1,5 @@
 import DeleteCity from "./DeleteCity";
+import ErrorLoadList from "./ErrorLoadList";
 
 export default function (name) {
     return fetch("http://localhost:4000/favorite", {
@@ -9,5 +10,10 @@ export default function (name) {
         },
         body: JSON.stringify({name: name})
     })
-        .then(() => DeleteCity(name));
+        .then(response => {
+            if (!response.ok && !response.status === 404)
+                return response.text().then(text => {throw "City was not deleted: " + text});
+        })
+        .then(() => DeleteCity(name))
+        .catch((err) => ErrorLoadList(err.toString()));
 }

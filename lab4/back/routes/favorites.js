@@ -4,9 +4,9 @@ module.exports = function (router) {
     router.get('/favorite', function (req, res) {
         db
             .then(c => c.find({}, {projection: {_id: 0}}))
-            .then(res => res.toArray())
-            .then(docs => res.send(JSON.stringify(docs)))
-            .catch(err => req.status(500).send(err.toString()))
+            .then(result => result.toArray())
+            .then(docs => res.send(JSON.stringify(docs.reduce((a, v) => {a[v.cityName] = v; return a}, {}))))
+            .catch(err => res.status(500).send(err.toString()))
             .catch(err => console.log(err.toString()))
     });
 

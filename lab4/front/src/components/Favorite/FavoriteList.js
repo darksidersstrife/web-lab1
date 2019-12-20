@@ -9,7 +9,7 @@ class FavoriteList extends Component {
         return <div className={"row"}>
             {Object.entries(this.props.cities).map(([cityName, city]) => {
                 return <div className={"col-6"} key={cityName}>
-                    <FavoriteCity name={cityName} cityInfo={city.cityInfo} cityHeader={city.cityHeader} download={city.download} error={city.error}/>
+                    <FavoriteCity name={cityName} cityInfo={city.cityInfo} cityHeader={city.cityHeader} download={city.download} error={city.error} errorText={city.errorText}/>
                 </div>
             })}
         </div>

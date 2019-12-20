@@ -13,12 +13,13 @@ class FavoriteCity extends Component {
     constructor(props) {
         super(props);
         this.state = {error: false, download: !Boolean(props.cityInfo)};
-        if (!props.cityInfo) {
+        if (!props.cityInfo)
             props.add(props.name);
-        }
+
     }
 
     render() {
+
         let cityInfo = this.state.error
             ? <div className={"title-sm text-secondary ml-5"}>{this.props.errorText}</div>
             : !this.state.download

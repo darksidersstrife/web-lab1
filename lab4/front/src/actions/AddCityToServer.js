@@ -1,11 +1,9 @@
 import LoadCity from "./LoadCity";
+import PostCityOnServer from "./PostCityOnServer";
 import ErrorCity from "./CityErrored";
-import SaveCityOnServer from "./PostCityOnServer";
 
 export default function (name) {
     return LoadCity(name)
-        .catch(err => {
-            return ErrorCity(name)
-        })
-        .then( (city) => SaveCityOnServer(city));
+        .then( (city) => PostCityOnServer(city))
+        .catch(err => ErrorCity(name, err.toString()));
 }

@@ -4,8 +4,9 @@ import ErrorCity from "./CityErrored";
 
 export default function (name) {
     return LoadCity(name)
-        .then(city => {city.cityName = name; return PutCityOnServer(city)})
-        .catch(err => {
-            return ErrorCity(name)
-        });
+        .then(city => {
+            city.cityName = name;
+            return PutCityOnServer(city)
+        })
+        .catch(err => ErrorCity(name, err.toString()));
 }
