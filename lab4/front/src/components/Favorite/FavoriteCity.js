@@ -5,7 +5,7 @@ import UpdateCity from "../../actions/UpdateCity"
 import {connect} from "react-redux";
 import AddCityToServer from "../../actions/AddCityToServer";
 import DeleteCityFromServer from "../../actions/DeleteCityFromServer";
-import PutCityOnServer from "../../actions/PutCityOnServer";
+import UpdateCityOnServer from "../../actions/UpdateCityOnServer";
 
 
 class FavoriteCity extends Component {
@@ -20,7 +20,7 @@ class FavoriteCity extends Component {
 
     render() {
         let cityInfo = this.state.error
-            ? <div className={"title-sm text-secondary ml-5"}>Ой...</div>
+            ? <div className={"title-sm text-secondary ml-5"}>{this.props.errorText}</div>
             : !this.state.download
                 ? <CityInfo data={this.props.cityInfo}/>
                 : <div><span className="spinner-border text-secondary ml-5 m-1 spin"/></div>;
@@ -44,7 +44,7 @@ class FavoriteCity extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         add : (name) => {dispatch(AddCityToServer(name))},
-        update: (name) => {dispatch(UpdateCity(name)); dispatch(PutCityOnServer(name))},
+        update: (name) => {dispatch(UpdateCity(name)); dispatch(UpdateCityOnServer(name))},
         delete: (name) => dispatch(DeleteCityFromServer(name))
     }
 }

@@ -1,7 +1,7 @@
 export function getHeader(response) {
     return {
         name: response.name,
-        temp: parseInt(response.main.temp - 273) + "°C",
+        temp: parseInt(response.main.temp) + "°C",
         iconLink: "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"
     }
 }
@@ -9,7 +9,7 @@ export function getHeader(response) {
 export function getHeaderMini(response) {
     return {
         name: response.name,
-        temp: parseInt(response.main.temp - 273) + "°C",
+        temp: parseInt(response.main.temp) + "°C",
         iconLink: "https://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
     }
 }
@@ -26,7 +26,7 @@ export function getInfo(response) {
 }
 
 export function skipState(key, value) {
-    if (key === "error" || key === "download") {
+    if (key === "error" || key === "download" || key === "errorText") {
         return undefined
     } else {
         return value

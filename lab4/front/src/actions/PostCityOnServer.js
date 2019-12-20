@@ -1,9 +1,9 @@
-import ErrorCity from "./CityErrored";
 import UpdateCityInfo from "./UpdateCityInfo";
 import {skipState} from "../util/City";
+import ErrorCityNotLoaded from "./ErrorCityNotLoaded";
 
 export default function (city) {
-    return fetch("http://localhost:4000/favorites", {
+    return fetch("http://localhost:4000/favorite", {
         method : "POST",
         headers: {
             'Accept': 'application/json',
@@ -18,6 +18,6 @@ export default function (city) {
         })
         .then(() => UpdateCityInfo(city))
         .catch(err => {
-            return ErrorCity(city.name)
+            return ErrorCityNotLoaded(city.cityName)
         });
 }

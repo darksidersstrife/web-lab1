@@ -44,7 +44,7 @@ export class CurrentCity extends Component {
 
     getWeather = async (coords) => {
         this.setState({downloading: true});
-        await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=2e19bb27bd5e717bac388dc0c1827b17`)
+        await fetch(`https://api.openweathermap.org/data/2.5/weather?&lang=ru&units=metric&lat=${coords.latitude}&lon=${coords.longitude}&appid=2e19bb27bd5e717bac388dc0c1827b17`)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);

@@ -1,6 +1,6 @@
 var db = require('../db');
 var conf = require('../config');
-var fetch = require('node-fetch')
+var fetch = require('node-fetch');
 
 module.exports = function (router) {
     router.get('/favorite', function (req, res) {
@@ -13,22 +13,24 @@ module.exports = function (router) {
 
     router.put('/favorite', function (req, res) {
 
-        if (!req.body.name) {
-            res.status(400).send('No name provided');
+        if (!req.body || !req.body.cityName) {
+            res.status(400).send('No city provided');
         }
 
+        req.body.cityName = req.body.cityName.toLowerCase();
         db
-            .then(weather => db.then(c => c.updateOne({name : req.body.name}, { "$set" : req.body })))
+            .then(weather => db.then(c => c.updateOne({cityName : req.body.cityName}, { "$set" : req.body })))
             .then(() => res.send("ok"))
             .catch(err => res.status(500).send(err.toString()))
     });
 
     router.post('/favorite', function (req, res) {
 
-        if (!req.body) {
+        if (!req.body || !req.body.cityName) {
             res.status(400).send('City not provided');
         }
 
+        req.body.cityName = req.body.cityName.toLowerCase();
         db
             .then(c => c.insertOne(req.body))
             .then(() => res.send("ok"))
@@ -42,7 +44,7 @@ module.exports = function (router) {
         }
 
         db
-            .then(weather => db.then(c => c.deleteOne({name : req.body.name})))
+            .then(weather => db.then(c => c.deleteOne({cityName : req.body.name.toLowerCase()})))
             .then(res => { if (res.deletedCount === 0) throw "City not found"; else return null })
             .then(() => res.send("ok"))
             .catch(err => res.status(500).send(err.toString()))

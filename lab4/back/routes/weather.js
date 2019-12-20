@@ -7,11 +7,10 @@ module.exports =  function(router) {
         if (!req.query.name) {
             res.status(400).send("No name provided")
         } else {
-            console.log(`${conf.apiUrl}&appid=${conf.token}&q=${req.query.name}`);
-            fetch(`${conf.apiUrl}&q=${req.query.name}&appid=${conf.token}`)
-                .then((response => response.json()))
+            fetch(`${conf.apiUrl}&appid=${conf.token}&q=${encodeURI(req.query.name)}`)
+                .then((response => { if (!response.ok) throw response.statusText; else return response.json()}))
                 .then(weather => res.status(weather.cod).send(weather))
-                .catch(err => res.send(`Error: ${err.toString()}`));
+                .catch(err => res.status(500).send(`Error: ${err.toString()}`));
         }
     });
 
@@ -21,9 +20,8 @@ module.exports =  function(router) {
         } else if (!req.query.lon) {
             res.status(400).send("No lon provided")
         } else {
-            console.log(`${conf.apiUrl}&appid=${conf.token}&lat=${req.query.lat}&lon=${req.query.lon}`);
             fetch(`${conf.apiUrl}&appid=${conf.token}&lat=${req.query.lat}&lon=${req.query.lon}`)
-                .then(response => response.json())
+                .then((response => { if (!response.ok) throw response.statusText; else return response.json()}))
                 .then(weather => res.status(weather.cod).send(weather))
                 .catch(err => res.send(`Error: ${err.toString()}`));
         }

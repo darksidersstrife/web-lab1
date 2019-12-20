@@ -3,7 +3,7 @@ import ErrorCity from "./CityErrored";
 import {skipState} from "../util/City";
 
 export default function (city) {
-    return fetch("http://localhost:4000/favorites", {
+    return fetch("http://localhost:4000/favorite", {
         method : "PUT",
         headers: {
             'Accept': 'application/json',
@@ -18,6 +18,6 @@ export default function (city) {
         })
         .then(() => UpdateCityInfo(city))
         .catch(err => {
-            return ErrorCity(city.name)
+            return ErrorCity(city.cityName)
         });
 }

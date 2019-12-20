@@ -21,15 +21,26 @@ export default function (cities, action) {
             return newState;
         case "UPDATE_CITY_INFO":
             newState = {...cities};
-            newState[action.cityName] = action.city;
-            newState[action.cityName].error = false;
-            newState[action.cityName].download = false;
+            newState[action.city.cityName] = action.city;
+            newState[action.city.cityName].error = false;
+            newState[action.city.cityName].download = false;
             return newState;
         case "ERROR_CITY":
             newState = {...cities};
             newState[action.cityName].error = true;
+            newState[action.cityName].errorText = "ошибка :(";
             newState[action.cityName].download = false;
             return newState;
+        case "CITY_NOT_LOADED":
+            newState = {...cities};
+            newState[action.cityName].error = true;
+            newState[action.cityName].errorText = "Город не был сохранен на сервере";
+            newState[action.cityName].download = false;
+            return newState;
+        case "UPDATE_LIST":
+            return {cities : action.list, download : true};
+        case "LIST_LOAD_ERROR":
+            return {error: true, cities : {}};
         default:
             return cities
     }

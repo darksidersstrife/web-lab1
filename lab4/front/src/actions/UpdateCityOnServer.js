@@ -4,7 +4,7 @@ import ErrorCity from "./CityErrored";
 
 export default function (name) {
     return LoadCity(name)
-        .then(city => PutCityOnServer(city))
+        .then(city => {city.cityName = name; return PutCityOnServer(city)})
         .catch(err => {
             return ErrorCity(name)
         });
