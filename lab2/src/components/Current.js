@@ -11,6 +11,9 @@ export class Current extends Component {
     constructor(props) {
         super(props);
         this.state = {position: this.defaultPosition};
+    }
+
+    componentDidMount() {
         this.getPosition();
     }
 

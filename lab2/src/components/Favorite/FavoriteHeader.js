@@ -4,7 +4,7 @@ import AddCity from "../../actions/AddCity";
 
 const FAVOR = "Избранное";
 
-class FavoriteHeader extends Component {
+export class FavoriteHeader extends Component {
 
     constructor(props) {
         super(props);

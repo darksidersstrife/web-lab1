@@ -7,7 +7,7 @@ import DeleteCity from "../../actions/DeleteCity";
 import {connect} from "react-redux";
 
 
-class FavoriteCity extends Component {
+export class FavoriteCity extends Component {
 
     constructor(props) {
         super(props);

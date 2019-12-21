@@ -3,7 +3,7 @@ import FavoriteCity from "./FavoriteCity";
 import {connect} from "react-redux";
 
 
-class FavoriteList extends Component {
+export class FavoriteList extends Component {
 
     render() {
         return <div className={"row"}>
